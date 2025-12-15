@@ -1,0 +1,62 @@
+train:
+  result_dir: ./result
+  experiment_name: grayscale_autoencoder_v2_l1Loss_100
+  learning_rate: 0.001
+  batch_size: 64
+  epochs: 100
+  loss_function: L1Loss # Options: MSELoss, L1Loss
+model:
+  encoder_layers:
+  # Layer 1: 512 -> 256
+  - in_channels: 1
+    out_channels: 32       # 16ではなく32から始めるのが一般的
+    kernel_size: 3
+    padding: 1
+    Maxpool_kernel_size: 2
+  # Layer 2: 256 -> 128
+  - in_channels: 32
+    out_channels: 64       # チャンネル倍増
+    kernel_size: 3
+    padding: 1
+    Maxpool_kernel_size: 2
+  # Layer 3: 128 -> 64 (※端数処理注意)
+  - in_channels: 64
+    out_channels: 128      # さらに倍増
+    kernel_size: 3
+    padding: 1
+    Maxpool_kernel_size: 2
+  
+  # ボトルネック (ここが潜在表現)
+  # サイズ: 64x64, Channels: 128
+
+  decoder_layers:
+  # Layer 3 Reverse: 64 -> 128 (※ここでのサイズ不一致に注意)
+  - in_channels: 128
+    out_channels: 64
+    kernel_size: 3
+    padding: 1
+    Upsample_scale_factor: 2
+  # Layer 2 Reverse: 128 -> 256
+  - in_channels: 64
+    out_channels: 32
+    kernel_size: 3
+    padding: 1
+    Upsample_scale_factor: 2
+  # Layer 1 Reverse: 256 -> 512 (※500に戻らない問題)
+  - in_channels: 32
+    out_channels: 32
+    kernel_size: 3
+    padding: 1
+    Upsample_scale_factor: 2
+  final_layer:
+    in_channels: 32
+    out_channels: 1
+    kernel_size: 3
+    padding: 1
+dataset:
+  train_json_path: /workspace/dataset/PASCAL_VOC_2007+2012/train_val/pascal_train_2007+2012_images_only.json
+  val_json_path: /workspace/dataset/PASCAL_VOC_2007+2012/train_val/pascal_val_2007+2012_images_only.json
+  test_json_path: /workspace/dataset/PASCAL_VOC_2007+2012/test/pascal_test_2007+2012_images_only.json
+  imagedir: "images"
+  image_size: 512
+  channels: 1
