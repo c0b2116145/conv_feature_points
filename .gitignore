@@ -1,0 +1,8 @@
+# OS固有のファイルを無視
+.DS_Store       # macOSのメタデータファイル
+Thumbs.db       # Windowsのサムネイルキャッシュファイル
+.Zone.Identifier # WSL2のファイル移動時生成されるゾーン情報
+
+# 実行環境設定系
+docker-compose.yml
+py3/
