@@ -6,3 +6,6 @@ Thumbs.db       # Windowsのサムネイルキャッシュファイル
 # 実行環境設定系
 docker-compose.yml
 py3/
+
+__pycache__/
+*.pyc

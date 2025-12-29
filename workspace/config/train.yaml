@@ -1,6 +1,6 @@
 train:
   result_dir: ./result
-  experiment_name: grayscale_autoencoder_v2_MSELoss_100
+  experiment_name: rgb_autoencoder_v2_MSELoss_100
   learning_rate: 0.001
   batch_size: 16
   epochs: 100
@@ -8,7 +8,7 @@ train:
 model:
   encoder_layers:
   # Layer 1: 512 -> 256
-  - in_channels: 1
+  - in_channels: 3
     out_channels: 32       # 16ではなく32から始めるのが一般的
     kernel_size: 3
     padding: 1
@@ -50,7 +50,7 @@ model:
     Upsample_scale_factor: 2
   final_layer:
     in_channels: 32
-    out_channels: 1
+    out_channels: 3
     kernel_size: 3
     padding: 1
 dataset:
@@ -59,4 +59,4 @@ dataset:
   test_json_path: /workspace/dataset/PASCAL_VOC_2007+2012/test/pascal_test_2007+2012_images_only.json
   imagedir: "images"
   image_size: 512
-  channels: 1
+  channels: 3
