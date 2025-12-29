@@ -1,10 +1,10 @@
 train:
   result_dir: ./result
-  experiment_name: grayscale_autoencoder_v2_l1Loss_100
+  experiment_name: grayscale_autoencoder_v2_MSELoss_100
   learning_rate: 0.001
-  batch_size: 64
+  batch_size: 16
   epochs: 100
-  loss_function: L1Loss # Options: MSELoss, L1Loss
+  loss_function: MSELoss # Options: MSELoss, L1Loss
 model:
   encoder_layers:
   # Layer 1: 512 -> 256
